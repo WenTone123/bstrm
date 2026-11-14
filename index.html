@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>BSTRM · DNS3 listening samples</title><link rel="stylesheet" href="style.css"><script defer src="samples.js"></script><script defer src="listen.js"></script></head>
 <body><header><div class="wrap header"><div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>BSTRM</div><span class="header-detail">DNS3 Extension Set</span></div></header>
-<main class="wrap"><h1>Speech enhancement samples</h1><p class="intro">Listen to the same utterance across models. Switch tracks during playback to compare them at the same instant.</p>
+<main class="wrap"><h1>Speech enhancement samples</h1>
+<div class="intro">
+<p>Each model processes the full 10-second noisy DNS3 recording to produce the enhanced audio.</p>
+<div><strong>Baseline models.</strong> We compare BSTRM with eight other speech enhancement systems.</div>
+<div><strong>Sequence models.</strong> We compare the original BSTRM with seven variants that replace its simple recurrent units.</div>
+<div><strong>BSTRM scaling.</strong> We compare six BSTRM configurations with target budgets of 5, 15, 31, 60, 100, and 150 MMAC/s.</div>
+</div>
 <nav id="groups" aria-label="Comparison group"></nav>
-<div class="samplebar"><div class="sample-picker"><label for="sample">Sample</label><button id="prev" aria-label="Previous sample">‹</button><select id="sample"></select><button id="next" aria-label="Next sample">›</button></div><span id="source"></span></div>
+<div class="samplebar"><div class="sample-picker"><label for="sample">Sample</label><button id="prev" aria-label="Previous sample">‹</button><select id="sample"></select><button id="next" aria-label="Next sample">›</button></div><span id="source">Choose a track to hear it at the same playback position.</span></div>
 <section class="transport" aria-label="Playback controls"><button id="play" aria-label="Play" disabled>▶</button><div class="now"><small>Selected track</small><strong id="trackname"></strong></div><span id="clock">0:00</span><input id="seek" type="range" min="0" max="10" step="0.01" value="0" aria-label="Playback position in seconds"><span class="duration">0:10</span><label class="loop"><input id="loop" type="checkbox"> Loop</label></section><div id="error" role="alert"></div>
-<div class="legend"><span>Magnitude relative to clean speech</span><span class="db">−80 <b></b> 0 dB</span></div><div id="tracks"></div>
-<footer id="method"></footer></main><audio id="audio" preload="metadata"></audio></body></html>
+<div class="legend"><span>Magnitude relative to clean speech</span><span class="db">−80 <b></b> 0 dB</span></div>
+<div id="tracks"><div id="references" role="group" aria-label="Clean and noisy references"></div><div id="outputs" role="group" aria-label="Enhanced speech"></div></div>
+</main><audio id="audio" preload="metadata"></audio></body></html>

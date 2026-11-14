@@ -22,7 +22,7 @@ function reflectPlayback() {
   const playing = wantsPlayback && !audio.paused;
   $("play").textContent = playing ? "Ⅱ" : "▶";
   $("play").setAttribute("aria-label",playing ? "Pause" : "Play");
-  Array.from($("tracks").children).forEach((card,i) => {
+  $("tracks").querySelectorAll(".card").forEach((card,i) => {
     card.setAttribute("aria-pressed", String(i === state.track));
     card.querySelector(".cue").textContent = playing && i === state.track ? "Ⅱ" : "▶";
   });
@@ -64,8 +64,8 @@ function selectSample(index) {
   $("prev").disabled = index === 0;
   $("next").disabled = index === group().samples.length - 1;
   const item = sample();
-  $("source").textContent = "DNS3 " + item.id + "  ·  10 s  ·  16 kHz";
-  $("tracks").replaceChildren();
+  $("references").replaceChildren();
+  $("outputs").replaceChildren();
   item.tracks.forEach((track,i) => {
     const card = element("button","card");
     const head = element("span","cardhead");
@@ -83,7 +83,8 @@ function selectSample(index) {
       const at = audio.ended ? 0 : audio.currentTime || Number($("seek").value);
       switchTrack(i,at,true);
     });
-    $("tracks").append(card);
+    const reference = track.name === "Clean" || track.name === "Noisy";
+    $(reference ? "references" : "outputs").append(card);
   });
   const defaultTrack = state.group === "scaling" ? item.tracks.length - 1 :
     item.tracks.findIndex(t => t.name === "BSTRM");
@@ -92,8 +93,7 @@ function selectSample(index) {
 function selectGroup(key) {
   state.group = key;
   Array.from($("groups").children).forEach(b => b.setAttribute("aria-pressed",String(b.dataset.group === key)));
-  $("sample").replaceChildren(...group().samples.map((s,i) => new Option(String(i+1).padStart(2,"0")+" / "+group().samples.length+" · "+s.id,String(i))));
-  $("method").textContent = group().note;
+  $("sample").replaceChildren(...group().samples.map((_,i) => new Option((i+1)+" of "+group().samples.length,String(i))));
   selectSample(0);
 }
 groupKeys.forEach(key => {
